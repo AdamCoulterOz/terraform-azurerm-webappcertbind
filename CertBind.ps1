@@ -15,7 +15,8 @@ function Read-CertBind {
     $result = Get-AzWebAppSSLBinding -ResourceGroupName $env:resource_group -WebAppName $env:web_app_name -Name $certificate.SubjectName
     
     if (([string]::IsNullOrEmpty($result)) -or ($result.Length -eq 0)) {
-        Write-Error "Cert binding not found."
+        Write-Error "Cert binding not found." -ErrorAction 'Continue'
+        return $Null
     }
     
     $output = @{ binding = $result.Name }
@@ -28,6 +29,7 @@ function New-CertBind {
 }
 function Remove-CertBind {
     Remove-AzWebAppSSLBinding -ResourceGroupName $env:resource_group -WebAppName $env:web_app_name -Name $certificate.SubjectName -DeleteCertificate $False -Force
+    Read-CertBind
 }
 
 function Set-CertBind {
