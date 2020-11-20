@@ -3,6 +3,7 @@ resource "shell_script" "app_service_cert_bind" {
     thumbprint     = var.thumbprint
     resource_group = var.resource_group
     web_app_name   = var.web_app_name
+    custom_fqdn    = var.custom_fqdn
   }
   
   lifecycle_commands {
